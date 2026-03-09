@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legendary Birthday ✨</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+height:100vh;
+overflow:hidden;
+font-family:'Poppins',sans-serif;
+background:linear-gradient(-45deg,#0f2027,#1a2a6c,#16213e,#000);
+background-size:400% 400%;
+animation:galaxyMove 18s ease infinite;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+@keyframes galaxyMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:0;
+}
+
+/* COVER */
+
+.cover{
+position:fixed;
+z-index:5;
+text-align:center;
+}
+
+.cover h1{
+font-size:3rem;
+background:linear-gradient(45deg,#ff7aa2,#ffd6e0);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.openBtn{
+padding:15px 34px;
+border:none;
+border-radius:40px;
+font-size:1.1rem;
+background:linear-gradient(45deg,#ff4b6e,#ff8fa3);
+color:white;
+cursor:pointer;
+box-shadow:0 0 25px rgba(255,120,150,.8);
+}
+
+/* CARD */
+
+.card{
+position:relative;
+z-index:2;
+text-align:center;
+padding:55px;
+border-radius:25px;
+backdrop-filter:blur(14px);
+background:rgba(255,255,255,0.08);
+box-shadow:0 0 50px rgba(255,255,255,0.25);
+max-width:680px;
+display:none;
+transform:scale(.7);
+opacity:0;
+transition:transform .8s ease, opacity .8s ease;
+}
+
+h1{
+font-size:3rem;
+background:linear-gradient(45deg,#ff7aa2,#ffd6e0);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* PHOTO */
+
+.photo img{
+width:150px;
+height:150px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid rgba(255,255,255,0.7);
+box-shadow:0 0 20px rgba(255,255,255,0.4);
+}
+
+/* CAKE */
+
+.cake{
+position:relative;
+width:140px;
+height:90px;
+margin:40px auto;
+}
+
+.layer{position:absolute;left:0;right:0;margin:auto;border-radius:12px}
+
+.layer.bottom{width:140px;height:40px;background:linear-gradient(#ff9fb2,#ff6f91);bottom:0}
+.layer.middle{width:110px;height:35px;background:linear-gradient(#ffd6a5,#ffb347);bottom:30px}
+.layer.top{width:80px;height:30px;background:linear-gradient(#fff0f6,#ffc2d1);bottom:55px}
+
+.candle{
+position:absolute;
+width:8px;
+height:28px;
+background:white;
+top:-10px;
+left:50%;
+transform:translateX(-50%);
+}
+
+.flame{
+position:absolute;
+width:14px;
+height:14px;
+background:radial-gradient(circle,yellow 0%,orange 60%,transparent 70%);
+border-radius:50%;
+top:-18px;
+left:50%;
+transform:translateX(-50%);
+animation:flicker .4s infinite alternate;
+}
+
+@keyframes flicker{
+from{transform:translateX(-50%) scale(1)}
+to{transform:translateX(-50%) scale(1.25)}
+}
+
+/* TULIPS */
+
+.bouquet{
+position:relative;
+width:200px;
+height:140px;
+margin:20px auto;
+}
+
+.flower{
+position:absolute;
+font-size:34px;
+animation:floatFlower 3s ease-in-out infinite;
+}
+
+@keyframes floatFlower{
+0%{transform:translateY(0)}
+50%{transform:translateY(-6px)}
+100%{transform:translateY(0)}
+}
+
+.f1{top:10px;left:30px}
+.f2{top:0;left:80px}
+.f3{top:10px;left:130px}
+.f4{top:50px;left:55px}
+.f5{top:50px;left:110px}
+
+/* CONFETTI */
+
+.confetti{
+position:fixed;
+width:10px;
+height:10px;
+top:-10px;
+animation:confettiFall linear forwards;
+z-index:3;
+}
+
+@keyframes confettiFall{
+to{transform:translateY(110vh) rotate(360deg)}
+}
+
+/* BALLOONS */
+
+.balloon{
+position:fixed;
+bottom:-150px;
+width:60px;
+height:80px;
+border-radius:50%;
+animation:balloonRise linear forwards;
+z-index:3;
+}
+
+.balloon:after{
+content:"";
+position:absolute;
+width:2px;
+height:60px;
+background:white;
+left:50%;
+top:80px;
+}
+
+@keyframes balloonRise{
+to{transform:translateY(-120vh)}
+}
+
+/* HEARTS */
+
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:20px;
+animation:heartFloat 6s linear forwards;
+}
+
+@keyframes heartFloat{
+0%{transform:translateY(0)}
+100%{transform:translateY(-110vh)}
+}
+
+#message{
+font-size:1.25rem;
+margin-top:20px;
+min-height:120px;
+line-height:1.7;
+}
+
+button{
+margin-top:30px;
+padding:14px 32px;
+border:none;
+border-radius:30px;
+font-size:1rem;
+background:linear-gradient(45deg,#ff4b6e,#ff8fa3);
+color:white;
+cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<audio id="bdayMusic" loop>
+<source src="nastelbom-happy-birthday-469282.mp3" type="audio/mpeg">
+</audio>
+
+<div class="cover" id="cover">
+<h1>A Small Birthday Surprise ✨</h1>
+<p>I made something special for you...</p>
+<button class="openBtn" onclick="openCard()">Open 🎁</button>
+</div>
+
+<div class="card" id="card">
+
+<h1>saeng-il chughahaeyo </h1>
+
+<div class="photo">
+<img src="IMG_6191 (1).JPG">
+</div>
+
+<div class="cake">
+<div class="layer bottom"></div>
+<div class="layer middle"></div>
+<div class="layer top"></div>
+<div class="candle"><div class="flame"></div></div>
+</div>
+
+<div class="bouquet">
+<div class="flower f1">🌷</div>
+<div class="flower f2">🌷</div>
+<div class="flower f3">🌷</div>
+<div class="flower f4">🌷</div>
+<div class="flower f5">🌷</div>
+</div>
+
+<div id="message"></div>
+<button onclick="nextScene()">Continue ✨</button>
+
+</div>
+
+<script>
+
+/* OPEN CARD */
+
+function openCard(){
+
+const cover=document.getElementById('cover')
+const card=document.getElementById('card')
+
+cover.style.opacity="0"
+cover.style.transform="scale(.8)"
+
+setTimeout(()=>{
+
+cover.style.display="none"
+card.style.display="block"
+
+setTimeout(()=>{
+card.style.opacity="1"
+card.style.transform="scale(1)"
+},100)
+
+startCelebration()
+nextScene()
+
+},800)
+
+}
+
+/* CONFETTI + BALLOONS + MUSIC */
+
+function startCelebration(){
+
+document.getElementById("bdayMusic").play()
+
+for(let i=0;i<60;i++){
+
+let conf=document.createElement("div")
+conf.className="confetti"
+
+conf.style.left=Math.random()*100+"vw"
+conf.style.backgroundColor="hsl("+Math.random()*360+",100%,60%)"
+conf.style.animationDuration=(3+Math.random()*4)+"s"
+
+document.body.appendChild(conf)
+
+setTimeout(()=>conf.remove(),7000)
+
+}
+
+for(let i=0;i<12;i++){
+
+let balloon=document.createElement("div")
+balloon.className="balloon"
+
+balloon.style.left=Math.random()*100+"vw"
+balloon.style.background="hsl("+Math.random()*360+",70%,60%)"
+balloon.style.animationDuration=(6+Math.random()*4)+"s"
+
+document.body.appendChild(balloon)
+
+setTimeout(()=>balloon.remove(),10000)
+
+}
+
+}
+
+/* FIREWORKS */
+
+const canvas=document.getElementById('fireworks');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let particles=[];
+
+function firework(){
+
+let x=Math.random()*canvas.width;
+let y=Math.random()*canvas.height/2;
+let hue=Math.random()*360;
+
+for(let i=0;i<120;i++){
+
+particles.push({
+x:x,
+y:y,
+angle:Math.random()*Math.PI*2,
+speed:Math.random()*6+2,
+life:120,
+hue:hue,
+size:Math.random()*3+1
+})
+
+}
+
+}
+
+function animate(){
+
+ctx.fillStyle='rgba(0,0,0,0.18)';
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+particles.forEach((p,index)=>{
+
+p.x+=Math.cos(p.angle)*p.speed;
+p.y+=Math.sin(p.angle)*p.speed;
+p.speed*=0.98;
+p.life--;
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fillStyle=`hsl(${p.hue},100%,60%)`;
+ctx.shadowBlur=10;
+ctx.shadowColor=`hsl(${p.hue},100%,70%)`;
+ctx.fill();
+
+if(p.life<=0)particles.splice(index,1);
+
+});
+
+requestAnimationFrame(animate);
+
+}
+
+setInterval(firework,1200);
+animate();
+
+/* STORY */
+
+const scenes=[
+"Today is a special day… because someone truly wonderful was born today. ✨",
+"I just wanted to take a moment to wish you the happiest birthday and a wonderful year ahead. 🎉",
+"Your smile and your kindness feels lucky to know you. 🌸",
+"생일 축하해요 (Saengil chukhahaeyo) — it means Happy Birthday in Korean 🇰🇷. 💖",
+"Also… I made this little birthday website for you because I wanted to make your day a bit more special. 💻✨",
+"I hope one day you celebrate your birthday under the beautiful lights of Seoul. ✨",
+"Until then… may your days be full of happiness, dreams, and wonderful moments. 🌷",
+"Happy Birthday once again. You truly deserve a beautiful day. 🎂"
+]
+
+let sceneIndex=0
+
+function typeText(text){
+
+let i=0
+const box=document.getElementById("message")
+box.innerHTML=""
+
+function typing(){
+if(i<text.length){
+box.innerHTML+=text.charAt(i)
+i++
+setTimeout(typing,35)
+}
+}
+
+typing()
+
+}
+
+function nextScene(){
+
+if(sceneIndex<scenes.length){
+typeText(scenes[sceneIndex])
+sceneIndex++
+}else{
+  finalScene();
+ }
+function finalScene(){
+ const box=document.getElementById('message');
+ box.innerHTML="✨ One more thing...<br><br>“Would you like to celebrate together someday? I think some moments are better felt when two people are a little closer.” 😉";
+}
+}
+
+
+/* HEARTS */
+
+function spawnHeart(){
+
+const heart=document.createElement("div")
+heart.className="heart"
+heart.innerHTML="💖"
+heart.style.left=Math.random()*window.innerWidth+"px"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),6000)
+
+}
+
+setInterval(()=>{
+
+if(document.getElementById("card").style.display==="block"){
+spawnHeart()
+}
+
+},800)
+
+</script>
+
+</body>
+</html>
